@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CG Employee Management App</title>
+  </head>
+  <body>
+    <script>
+      function main() {
+        let employees = new Array();
+        employees = initEmployees(employees);
+        outputEmployees(employees);
+        inputEmployees(employees);
+        outputEmployees(employees);
+        employees = calculateSalary(employees);
+        outputEmployees(employees);
+        employees = sortBySalary(employees);
+        outputEmployees(employees);
+        employees = findMaxSalaryEmployees(employees);
+        outputEmployees(employees);
+        employees = editEmployeeInfo(employees);
+        outputEmployees(employees);
+        employees = removeEmployee(employees);
+        outputEmployees(employees);
+      }
+      function initEmployees(employeeList) {
+        let productSalary = 50;
+        // let firstEmployee = {id: 1, fullName: "Tý", baseSalary: 550, productSalary, productQuantity: 15}
+        // let sencondEmployee = {id: 2, fullName: "Tèo", baseSalary: 550, productSalary, productQuantity: 15}
+        // let thirdEmployee = {id: 3, fullName: "Tồ", baseSalary: 550, productSalary, productQuantity: 15}
+        let firstEmployee = {
+          id: 1,
+          fullName: "Tý",
+          baseSalary: 550,
+          productSalary,
+          productQuantity: 15,
+          totalSalary: 150,
+        };
+        let sencondEmployee = {
+          id: 2,
+          fullName: "Tèo",
+          baseSalary: 550,
+          productSalary,
+          productQuantity: 15,
+          totalSalary: 80,
+        };
+        let thirdEmployee = {
+          id: 3,
+          fullName: "Tồ",
+          baseSalary: 550,
+          productSalary,
+          productQuantity: 15,
+          totalSalary: 100,
+        };
+        let fouthEmployee = {
+          id: 4,
+          fullName: "Tin",
+          baseSalary: 550,
+          productSalary,
+          productQuantity: 15,
+          totalSalary: 150,
+        };
+        let fifthEmployee = {
+          id: 5,
+          fullName: "Tun",
+          baseSalary: 550,
+          productSalary,
+          productQuantity: 15,
+          totalSalary: 150,
+        };
+        employeeList.push(firstEmployee);
+        employeeList.push(sencondEmployee);
+        employeeList.push(thirdEmployee);
+        employeeList.push(fouthEmployee);
+        employeeList.push(fifthEmployee);
+        return employeeList;
+      }
+      function outputEmployees(employeeList) {
+        console.log("List of employees is: ");
+        employeeList.forEach((e) => console.log(e));
+      }
+      function inputEmployee(idx) {
+        let id = idx + 1;
+        let fullName = prompt(`Enter employees[${id}] full name: `);
+        let baseSalary = Number(prompt(`Enter employees[${id}] base salary: `));
+        let productSalary = 50;
+        let productQuantity = Number(
+          prompt(`Enter employees[${id}] product quantity: `)
+        );
+        return { id, fullName, baseSalary, productSalary, productQuantity };
+      }
+      function inputEmployees(employeeList) {
+        let n = Number(prompt("Enter number of employees: "));
+        let nextIdx = employeeList.length;
+        for (let i = 0; i < n; i++) {
+          let newEmployee = inputEmployee(i + nextIdx);
+          employeeList.push(newEmployee);
+        }
+      }
+      function calculateSalary(employeeList) {
+        employeeList.forEach((employee) => {
+          let baseSalary = employee.baseSalary;
+          let productSalary = employee.productSalary;
+          let productQuantity = employee.productQuantity;
+          let totalSalary = baseSalary + productSalary * productQuantity;
+
+          employee.productQuantity < 50
+            ? (totalSalary *= 0.9)
+            : (totalSalary += (productQuantity - 50) * 0.1 * productSalary);
+        });
+        return employeeList;
+      }
+      function sortBySalary(employeeList) {
+        return employeeList.sort((a, b) => a.totalSalary - b.totalSalary);
+      }
+      function findMaxSalaryEmployees(employeeList) {
+        employeeList.sort((a, b) => a.totalSalary - b.totalSalary);
+        let maxTotalSalary = employeeList[employeeList.length - 1].totalSalary;
+        return employeeList.filter((e) => e.totalSalary === maxTotalSalary);
+      }
+      function editEmployeeInfo(employeeList) {
+        let editingId = Number(prompt(`Enter employee id to edit: `));
+        let editingEmployee = employeeList.filter((e) => e.id === editingId);
+        editingEmployee.map((e) => {
+          e.fullName = prompt("Enter new full name: ");
+          e.baseSalary = Number(prompt("Enter new base salary: "));
+          e.productSalary = 50;
+          e.productQuantity = Number(prompt("Enter new product quantity: "));
+          return e;
+        });
+        return employeeList;
+      }
+      function removeEmployee(employeeList) {
+        let removingId = Number(prompt(`Enter employee id to remove: `));
+        return employeeList.filter((e) => e.id !== removingId);
+      }
+      main();
+    </script>
+  </body>
+</html>
